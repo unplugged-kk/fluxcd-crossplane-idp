@@ -11,6 +11,3 @@ spec:
   path: "./clusters/docker-desktop/capacitor" # Replace with the actual path to your Kustomization
   prune: true
   timeout: 5m
-  resources:
-    - manifest.yaml
-    - rbac.yaml
