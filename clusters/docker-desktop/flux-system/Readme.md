@@ -19,6 +19,11 @@ Install FLux CLI on Mangement Server.
 curl -s https://fluxcd.io/install.sh | sudo bash
 ```
 
+```sh
+kubectl create ns flux-system
+```
+
+
 ## Step 2: Install FluxCD Helm Chart
 
 ```sh
@@ -43,14 +48,14 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 ## Step 5: Display Public Key
 
 ```sh
-cat ~/.ssh/unpluggedkk_id_rsa.pub
+cat /Users/kishore.behera/.ssh/kishore.pub
 ```
 
 ## Step 6: Bootstrap FluxCD
 
 ```sh
-flux bootstrap git --url=ssh://git@github.com/unplugged-kk/fluxcd-crossplane-idp \
---branch=main --private-key-file=/Users/kishore.behera/unpluggedkk_id_rsa --password=<SSH-PRIVATE-KEY-PASSWORD> \
+flux bootstrap git --url=ssh://git@github.com/kishore-behera/fluxcd-crossplane-idp \
+--branch=main --private-key-file=/Users/kishore.behera/.ssh/kishore --password=<SSH-PRIVATE-KEY-PASSWORD> \
 --path=clusters/docker-desktop  < you can use your cluster name too >
 ```
 

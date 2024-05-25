@@ -4,4 +4,4 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - crossplane-kustomization.yaml
-  - capacitor-kustomization.yaml
+  # - capacitor-kustomization.yaml
