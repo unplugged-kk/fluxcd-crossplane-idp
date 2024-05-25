@@ -1,0 +1,5 @@
+apiVersion: v2
+name: crossplane-azure-xrc
+description: A custom Helm chart for Provisioning Azure resources using crossplane XRCs
+version: 0.1.0
+appVersion: 1.0.0

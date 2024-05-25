@@ -1,0 +1,12 @@
+# {{- if .Values.resourceGroup }}
+#   apiVersion: azure.upbound.io/v1beta1
+#   kind: ResourceGroup
+#   metadata:
+#     name: {{ .Values.resourceGroup.name }}
+#     namespace: {{ .Values.namespace }}
+#   spec:
+#     forProvider:
+#       location: {{ .Values.resourceGroup.location }}
+#     providerConfigRef:
+#       name: {{ .Values.providerConfigRef }}  
+# {{- end }}

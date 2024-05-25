@@ -1,0 +1,18 @@
+{{- if .Values.resourceGroup }}
+apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+kind: ResourceGroupClaim
+metadata:
+  name: {{ .Values.resourceGroup.name }}-claim
+  namespace: {{ .Values.namespace }}
+  annotations:
+    crossplane.io/external-name: {{ .Values.resourceGroup.externalName }}
+  # labels:
+  #   rg: {{ .Values.resourceGroup.label }}  
+spec:
+  compositionRef:
+    name: xresourcegroups-azure
+  parameters:
+    location: {{ .Values.resourceGroup.location }}
+    providerConfigRef: 
+      name: {{ .Values.providerConfigRef }}  
+{{- end }}

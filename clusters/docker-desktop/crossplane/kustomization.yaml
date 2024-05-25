@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - helm/crossplane-helmrelease.yaml
   - helm/crossplane-helmrepository.yaml
+  # - secrets/sealed-azure-secret.yaml
+  # - azure-provider/provider-config.yaml
+  - azure-provider/provider-azure-network.yaml
+  - azure-provider/provider-azure-management.yaml
+  - azure-provider/provider-azure-cosmosdb.yaml
+  - azure-provider/provider-azure-dbforpostgresql.yaml
+  - azure-provider/provider-azure-storage.yaml
+  # - azure-provider/provider-azure-image.yaml

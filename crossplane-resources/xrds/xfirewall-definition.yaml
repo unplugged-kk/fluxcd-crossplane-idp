@@ -1,0 +1,239 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing xFirewall resources in Azure.
+# It specifies the structure and properties of the xFirewall resource, including its parameters, such as location, resource group name, virtual network name, and more.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xfirewalls.azureinfra.dockerdesktop.kishorekumar.today
+spec:
+  group: azureinfra.dockerdesktop.kishorekumar.today
+  names:
+    kind: xFirewall
+    plural: xfirewalls
+  claimNames:
+    kind: FirewallClaim
+    plural: firewallclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    location:
+                      type: string
+                    resourceGroupName:
+                      type: string
+                    virtualNetworkName:
+                      type: string
+                    subnetName:
+                      type: string
+                    firewallName:
+                      type: string
+                    firewallPolicyId:
+                      type: string
+                    skuName:
+                      type: string
+                    skuTier:
+                      type: string
+                    # Firewall Route Variables
+                    routeTableName:
+                      type: string
+                    addressPrefix:
+                      type: string
+                    nextHopType:
+                      type: string
+                    nextHopInIpAddress:
+                      type: string
+                    # subnetIdSelector:
+                    #   type: object
+                    #   properties:
+                    #     matchLabels:
+                    #       type: object
+                    #       properties:
+                    #         subnet-ref:
+                    #           type: string
+                    # routeTableIdSelector:
+                    #   type: object
+                    #   properties:
+                    #     matchLabels:
+                    #       type: object
+                    #       properties:
+                    #         routetable-ref:
+                    #           type: string
+                    sku:
+                      type: string
+                    basePolicyId:
+                      type: string
+                    intrusionDetection:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          mode:
+                            type: string
+                    threatIntelligenceMode:
+                      type: string
+                    autoLearnPrivateRangesEnabled:
+                      type: boolean
+                    firewallPolicyIdSelector:
+                      type: object
+                      properties:
+                        matchLabels:
+                          type: object
+                          additionalProperties:
+                            type: string
+                    priority:
+                      type: number
+                    applicationRuleCollection:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          action:
+                            type: string
+                          priority:
+                            type: integer
+                          rule:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                sourceAddresses:
+                                  type: array
+                                  items:
+                                    type: string
+                                destinationPorts:
+                                  type: array
+                                  items:
+                                    type: string
+                                protocols:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      port:
+                                        type: integer
+                                      type:
+                                        type: string
+                                destinationFqdns:
+                                  type: array
+                                  items:
+                                    type: string
+                    networkRuleCollection:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          action:
+                            type: string
+                          priority:
+                            type: integer
+                          rule:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                sourceAddresses:
+                                  type: array
+                                  items:
+                                    type: string
+                                destinationAddresses:
+                                  type: array
+                                  items:
+                                    type: string
+                                destinationPorts:
+                                  type: array
+                                  items:
+                                    type: string
+                                protocols:
+                                  type: array
+                                  items:
+                                    type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  # NAT Rule Definition Added for Future Requirements
+                  # natRuleCollections:
+                  #   type: array
+                  #   items:
+                  #     type: object
+                  #     properties:
+                  #       name:
+                  #         type: string
+                  #       action:
+                  #         type: string
+                  #       priority:
+                  #         type: integer
+                  #       rules:
+                  #         type: array
+                  #         items:
+                  #           type: object
+                  #           properties:
+                  #             name:
+                  #               type: string
+                  #             sourceAddresses:
+                  #               type: array
+                  #               items:
+                  #                 type: string
+                  #             destinationAddresses:
+                  #               type: array
+                  #               items:
+                  #                 type: string
+                  #             destinationPorts:
+                  #               type: array
+                  #               items:
+                  #                 type: string
+                  #             translatedAddress:
+                  #               type: string
+                  #             translatedPort:
+                  #               type: string
+                  #             protocols:
+                  #               type: array
+                  #               items:
+                  #                 type: string
+                  required:
+                    - "location"
+                    - "resourceGroupName"
+                    - "virtualNetworkName"
+                    - "subnetName"
+                    - "firewallName"
+                    - "skuName"
+                    - "skuTier"
+                    - "routeTableName"
+                    - "addressPrefix"
+                    - "nextHopType"
+                    - "nextHopInIpAddress"
+                    - "resourceGroupName"
+                    # - "subnetIdSelector"
+                    # - "routeTableIdSelector"
+                    - "sku"
+                    - "firewallPolicyIdSelector"
+                    - "priority"
+                    - "applicationRuleCollection"
+                    - "networkRuleCollection"
+                    # - "natRuleCollections"
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object

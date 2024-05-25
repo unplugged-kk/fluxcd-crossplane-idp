@@ -1,0 +1,55 @@
+# This YAML configuration defines a Composition resource in Crossplane, specifically tailored for Azure application gateways.
+# It establishes mappings between fields of an abstract "xApplicationGateway" and concrete Azure "ApplicationGateway" instances.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xapplicationgateways-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    kind: xApplicationGateway
+  resources:
+    - name: applicationgateway
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: ApplicationGateway
+        spec:
+          forProvider:
+            location: ""
+            sku:
+            frontendIpConfiguration:
+            gatewayIpConfiguration:
+            frontendPort:
+            httpListener:
+            resourceGroupNameSelector:
+            # Temporary Backend Settings
+            backendAddressPool:
+            backendHttpSettings:
+            requestRoutingRule:
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "spec.parameters.sku"
+          toFieldPath: "spec.forProvider.sku"
+        - fromFieldPath: "spec.parameters.frontendIpConfiguration"
+          toFieldPath: "spec.forProvider.frontendIpConfiguration"
+        - fromFieldPath: "spec.parameters.gatewayIpConfiguration"
+          toFieldPath: "spec.forProvider.gatewayIpConfiguration"
+        - fromFieldPath: "spec.parameters.frontendPort"
+          toFieldPath: "spec.forProvider.frontendPort"
+        - fromFieldPath: "spec.parameters.httpListener"
+          toFieldPath: "spec.forProvider.httpListener"
+        - fromFieldPath: "spec.parameters.resourceGroupNameSelector"
+          toFieldPath: "spec.forProvider.resourceGroupNameSelector"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"
+        - fromFieldPath: "spec.parameters.backendAddressPool"
+          toFieldPath: "spec.forProvider.backendAddressPool"
+        - fromFieldPath: "spec.parameters.backendHttpSettings"
+          toFieldPath: "spec.forProvider.backendHttpSettings"
+        - fromFieldPath: "spec.parameters.requestRoutingRule"
+          toFieldPath: "spec.forProvider.requestRoutingRule"

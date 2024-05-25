@@ -1,0 +1,53 @@
+{{- if .Values.appGateway }}
+apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+kind: ApplicationGatewayClaim
+metadata:
+  name: {{ .Values.appGateway.name }}-claim
+  namespace: {{ .Values.namespace }}
+  annotations:
+    crossplane.io/external-name: {{ .Values.appGateway.externalName }}
+spec:
+  compositionRef:
+    name: xapplicationgateways-azure
+  parameters:
+    location: {{ .Values.appGateway.location }}
+    sku:
+      - name: {{ .Values.appGateway.sku.name }}
+        tier: {{ .Values.appGateway.sku.tier }}
+        capacity: {{ .Values.appGateway.sku.capacity }}
+    frontendIpConfiguration:
+      - name: {{ .Values.appGateway.frontendIpConfiguration.name }}
+        publicIpAddressIdSelector:
+          matchLabels:
+            public-ip: {{ .Values.appGateway.frontendIpConfiguration.publicIpAddressIdSelector }}
+    gatewayIpConfiguration:
+      - name: {{ .Values.appGateway.gatewayIpConfiguration.name }}
+        subnetIdSelector:
+          matchLabels:
+            subnet-ref: {{ .Values.appGateway.gatewayIpConfiguration.subnetIdSelector }}
+    frontendPort:
+      - name: {{ .Values.appGateway.frontendPort.name }}
+        port: {{ .Values.appGateway.frontendPort.port }}
+    httpListener:
+      - frontendIpConfigurationName: {{ .Values.appGateway.httpListener.frontendIpConfigurationName }}
+        frontendPortName: {{ .Values.appGateway.httpListener.frontendPortName }}
+        name: {{ .Values.appGateway.httpListener.name }}
+        protocol: {{ .Values.appGateway.httpListener.protocol }}
+    resourceGroupNameSelector:
+      matchLabels:
+        rg: {{ .Values.appGateway.resourceGroupNameSelector }}
+    backendAddressPool:
+      - name: {{ .Values.appGateway.backendAddressPool.name }}
+    backendHttpSettings:
+      - name: {{ .Values.appGateway.backendHttpSettings.name }}
+        port: {{ .Values.appGateway.backendHttpSettings.port }}
+    requestRoutingRule:
+      - backendAddressPoolName: {{ .Values.appGateway.requestRoutingRule.backendAddressPoolName }}
+        backendHttpSettingsName: {{ .Values.appGateway.requestRoutingRule.backendHttpSettingsName }}
+        httpListenerName: {{ .Values.appGateway.requestRoutingRule.httpListenerName }}
+        name: {{ .Values.appGateway.requestRoutingRule.name }}
+        ruleType: {{ .Values.appGateway.requestRoutingRule.ruleType }}
+        priority: {{ .Values.appGateway.requestRoutingRule.priority }}
+    providerConfigRef: 
+      name: {{ .Values.providerConfigRef }}
+{{- end }}        

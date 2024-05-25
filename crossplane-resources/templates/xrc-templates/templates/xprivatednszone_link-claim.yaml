@@ -1,0 +1,23 @@
+{{- if .Values.privateDNSZones }}
+{{- range $zone := .Values.privateDNSZones }}
+---
+apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+kind: PrivateDNSZoneClaim
+metadata:
+  name: {{ $zone.name }}-claim
+  namespace: {{ $.Values.namespace }}
+  annotations:
+    crossplane.io/external-name: {{ $zone.name }}
+spec:
+  compositionRef:
+    name: xprivatednszones-azure
+  parameters:
+    resourceGroupName: {{ $.Values.resourceGroup.externalName }}
+    privateDnsZoneName: {{ $zone.name }}
+    virtualNetworkIdSelector:
+      matchLabels:
+        vnet-ref: {{ $zone.virtualNetworkIdSelector }}
+    providerConfigRef:
+      name: {{ $.Values.providerConfigRef }}
+{{- end }}
+{{- end }}

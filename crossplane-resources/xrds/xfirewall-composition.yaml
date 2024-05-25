@@ -1,0 +1,195 @@
+# This YAML configuration defines a Composition resource in Crossplane for managing various Azure firewall-related resources.
+# It establishes mappings between abstract "xFirewall" fields and concrete Azure firewall resources, facilitating their provisioning and management.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xfirewalls-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    kind: xFirewall
+  resources:
+    - name: firewallpolicy
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: FirewallPolicy
+        metadata:
+          annotations:
+            crossplane.io/external-name: "kishore-firewall-policy"
+          labels:
+            fw-policy-ref: "kishore-firewall"
+        spec:
+          forProvider:
+            resourceGroupName: ""
+            sku: ""
+            basePolicyId: ""
+            intrusionDetection: []
+            threatIntelligenceMode: ""
+            autoLearnPrivateRangesEnabled:
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "spec.parameters.sku"
+          toFieldPath: "spec.forProvider.sku"
+        - fromFieldPath: "spec.parameters.basePolicyId"
+          toFieldPath: "spec.forProvider.basePolicyId"
+        - fromFieldPath: "spec.parameters.threatIntelligenceMode"
+          toFieldPath: "spec.forProvider.threatIntelligenceMode"
+        - fromFieldPath: "spec.parameters.autoLearnPrivateRangesEnabled"
+          toFieldPath: "spec.forProvider.autoLearnPrivateRangesEnabled"
+        - fromFieldPath: "spec.parameters.intrusionDetection"
+          toFieldPath: "spec.forProvider.intrusionDetection"
+
+    - name: firewall
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: Firewall
+        metadata:
+          annotations:
+            crossplane.io/external-name: "kishore-firewall"
+          labels:
+            firewall-name: "kishore-firewall"
+        spec:
+          forProvider:
+            location: ""
+            resourceGroupName: ""
+            firewallPolicyId: ""
+            skuName: ""
+            skuTier: ""
+            ipConfiguration:
+              - name: "configuration"
+                publicIpAddressIdSelector:
+                  matchLabels:
+                    public-ip: "firewall-public-ip"
+                subnetIdSelector:
+                  matchLabels:
+                    subnet-ref: "kishore-firewall-subnet-ref"
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "spec.parameters.firewallPolicyId"
+          toFieldPath: "spec.forProvider.firewallPolicyId"
+        - fromFieldPath: "spec.parameters.skuTier"
+          toFieldPath: "spec.forProvider.skuTier"
+        - fromFieldPath: "spec.parameters.skuName"
+          toFieldPath: "spec.forProvider.skuName"
+
+    - name: routetable
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: RouteTable
+        metadata:
+          annotations:
+            crossplane.io/external-name: "kishore-fw-routetable"
+          labels:
+            routetable-ref: "kishore-fw-routetable"
+        spec:
+          forProvider:
+            location: ""
+            resourceGroupName: ""
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+
+    - name: route
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: Route
+        metadata:
+          annotations:
+            crossplane.io/external-name: "kishore-fw-route"
+          labels:
+            route-ref: "kishore-fw-route"
+        spec:
+          forProvider:
+            resourceGroupName: ""
+            routeTableName: ""
+            addressPrefix: ""
+            nextHopType: "VirtualAppliance"
+            nextHopInIpAddress: ""
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.routeTableName"
+          toFieldPath: "spec.forProvider.routeTableName"
+        - fromFieldPath: "spec.parameters.addressPrefix"
+          toFieldPath: "spec.forProvider.addressPrefix"
+        - fromFieldPath: "spec.parameters.nextHopType"
+          toFieldPath: "spec.forProvider.nextHopType"
+        - fromFieldPath: "spec.parameters.nextHopInIpAddress"
+          toFieldPath: "spec.forProvider.nextHopInIpAddress"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+
+    # Below one is a sample composition file for the routetable associations to a subnet, application gateway subnet can't be attached to routetable where UDR is defined
+    #     - name: subnetroutetableassociation
+    #       base:
+    #         apiVersion: network.azure.upbound.io/v1beta1
+    #         kind: SubnetRouteTableAssociation
+    #         spec:
+    #           forProvider:
+    #             subnetIdSelector:
+    #               matchLabels:
+    #                 subnet-ref: "kishore-apgw-subnet-ref"
+    #             routeTableIdSelector:
+    #               matchLabels:
+    #                 routetable-ref: "kishore-fw-routetable"
+    #           providerConfigRef:
+    #             name: ""
+    #       patches:
+    #         - fromFieldPath: "spec.parameters.providerConfigRef.name"
+    #           toFieldPath: "spec.providerConfigRef.name"
+    #         - fromFieldPath: "spec.parameters.routeTableIdSelector.matchLabels.routetable-ref"
+    #           toFieldPath: "spec.forProvider.routeTableIdSelector.matchLabels.routetable-ref"
+    #         - fromFieldPath: "spec.parameters.subnetIdSelector.matchLabels.subnet-ref"
+    #           toFieldPath: "spec.forProvider.subnetIdSelector.matchLabels.subnet-ref"
+
+    - name: firewallpolicyrulecollectiongroup
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: FirewallPolicyRuleCollectionGroup
+        spec:
+          forProvider:
+            firewallPolicyIdSelector:
+              matchLabels:
+                fw-policy-ref: ""
+            priority: ""
+            applicationRuleCollection: []
+            networkRuleCollection: []
+          # natRuleCollections: []  # Placeholder for NAT rule collections
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.firewallPolicyIdSelector.matchLabels.fw-policy-ref"
+          toFieldPath: "spec.forProvider.firewallPolicyIdSelector.matchLabels.fw-policy-ref"
+        - fromFieldPath: "spec.parameters.priority"
+          toFieldPath: "spec.forProvider.priority"
+        - fromFieldPath: "spec.parameters.applicationRuleCollection"
+          toFieldPath: "spec.forProvider.applicationRuleCollection"
+        - fromFieldPath: "spec.parameters.networkRuleCollection"
+          toFieldPath: "spec.forProvider.networkRuleCollection"
+        # Uncomment and adjust the following if NAT rules are needed
+        # - fromFieldPath: "spec.parameters.natRuleCollections"
+        #   toFieldPath: "spec.forProvider.natRuleCollections"

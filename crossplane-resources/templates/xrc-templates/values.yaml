@@ -1,0 +1,142 @@
+# ###
+
+
+namespace: kishore-azure-config
+
+providerConfigRef: kodekloud-config
+
+resourceGroup:
+  name: kodekloud-rg
+  externalName: kishore-kodekloud-rg
+  location: West Europe
+
+virtualNetwork:
+  name: kishore-virtualnetwork
+  externalName: crossplane-vnet
+  addressSpace: 192.168.0.0/16
+  location: West Europe
+
+subnets:
+  - name: azure-firewall-subnet
+    externalName: AzureFirewallSubnet
+    subnetRef: kishore-firewall-subnet-ref
+    addressPrefixes:
+      - 192.168.0.0/24
+    subnetName: AzureFirewallSubnet
+  - name: application-gateway-subnet
+    externalName: ApplicationGatewaySubnet
+    subnetRef: kishore-apgw-subnet-ref
+    addressPrefixes:
+      - 192.168.1.0/24
+    subnetName: ApplicationGatewaySubnet
+
+# appGateway:
+#   name: kishore-app-gateway
+#   externalName: kishore-app-gateway
+#   location: West Europe
+#   sku:
+#     name: Standard_v2
+#     tier: Standard_v2
+#     capacity: 2
+#   frontendIpConfiguration:
+#     name: kishore-frontendIpConfiguration
+#     publicIpAddressIdSelector: apgw-public-ip
+#   gatewayIpConfiguration:
+#     name: kishore-gatewayIpConfiguration
+#     subnetIdSelector: kishore-apgw-subnet-ref
+#   frontendPort:
+#     name: kishore-frontendPort
+#     port: 80
+#   httpListener:
+#     frontendIpConfigurationName: kishore-frontendIpConfiguration
+#     frontendPortName: kishore-frontendPort
+#     name: kishore-httpListener
+#     protocol: Http
+#   resourceGroupNameSelector: kishore-rg-reference
+#   backendAddressPool:
+#     name: kishore-backendAddressPool
+#   backendHttpSettings:
+#     name: kishore-backendHttpSettings
+#     port: 1
+#   requestRoutingRule:
+#     backendAddressPoolName: kishore-backendAddressPool
+#     backendHttpSettingsName: kishore-backendHttpSettings
+#     httpListenerName: kishore-httpListener
+#     name: kishore-requestRoutingRule
+#     ruleType: Basic
+#     priority: 2000
+
+# firewall:
+#   name: kishore-firewall
+#   location: West Europe
+#   skuName: AZFW_VNet
+#   skuTier: Premium
+#   firewallPolicyId: "/subscriptions/1947901f-c34b-4ff0-98e7-0f0acf01b5a7/resourceGroups/network-landing-zone-rg/providers/Microsoft.Network/firewallPolicies/kishore-firewall-policy"
+#   routeTableName: kishore-fw-routetable
+#   addressPrefix: 0.0.0.0/0
+#   nextHopType: VirtualAppliance
+#   nextHopInIpAddress: 192.168.0.4
+#   sku: Premium
+#   basePolicyId: ""
+#   intrusionDetection:
+#     mode: Alert
+#   threatIntelligenceMode: Alert
+#   autoLearnPrivateRangesEnabled: true
+#   firewallPolicyIdSelector: kishore-firewall
+#   priority: 500
+#   applicationRuleCollection:
+#     name: application-rule-collection-1
+#     action: Allow
+#     priority: 300
+#     rule:
+#       name: kishore-application-fw-rule
+#       sourceAddresses:
+#         - 192.168.0.0/16
+#       destinationFqdns:
+#         - "*.hcp.azure.com"
+#         - "*.tun.azure.com"
+#         - "*.blob.core.windows.net"
+#         - "*.azurecr.io"
+#         - login.microsoftonline.com
+#         - packages.microsoft.com
+#         - acs-mirror.azureedge.net
+#       protocols:
+#         port: 443
+#         type: Https
+#   networkRuleCollection:
+#     name: network-rule-collection-1
+#     action: Allow
+#     priority: 200
+#     rule:
+#       name: kishore-network-fw-rule
+#       sourceAddresses:
+#         - 192.168.0.0/16
+#       destinationAddresses:
+#         - 0.0.0.0/0
+#       destinationPorts:
+#         - "53"
+#         - "80"
+#         - "443"
+#         - "22"
+#       protocols:
+#         - TCP
+#         - UDP
+
+# privateDNSZone:
+#   name: kishore-privatednszone
+#   virtualNetworkIdSelector: kishore-vnet-ref
+#   privateDnsZoneName: kishorekumar.today
+
+# publicIPs:
+#   - name: kishore-appgatewaypublicip
+#     externalName: kishore-apgw-public-ip
+#     publicIPLabel: apgw-public-ip
+#     location: West Europe
+#     allocationMethod: Static
+#     sku: Standard
+#   - name: kishore-firewallpublicip
+#     externalName: kishore-fw-pub-ip
+#     publicIPLabel: firewall-public-ip
+#     location: West Europe
+#     allocationMethod: Static
+#     sku: Standard

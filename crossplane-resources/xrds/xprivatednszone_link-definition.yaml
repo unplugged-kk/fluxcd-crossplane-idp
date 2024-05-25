@@ -1,0 +1,59 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing xPrivateDNSZones in Azure via Crossplane.
+# It facilitates the creation and management of Private DNS Zones within Azure environments, enabling seamless integration with Kubernetes.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xprivatednszones.azureinfra.dockerdesktop.kishorekumar.today
+spec:
+  group: azureinfra.dockerdesktop.kishorekumar.today
+  names:
+    kind: xPrivateDNSZone
+    plural: xprivatednszones
+  claimNames:
+    kind: PrivateDNSZoneClaim
+    plural: privatednszoneclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    resourceGroupName:
+                      type: string
+                    privateDnsZoneName:
+                      type: string
+                    virtualNetworkIdSelector:
+                      type: object
+                      properties:
+                        matchLabels:
+                          type: object
+                          properties:
+                            vnet-ref:
+                              type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required:
+                    [
+                      "resourceGroupName",
+                      "privateDnsZoneName",
+                      "virtualNetworkIdSelector",
+                    ]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object
