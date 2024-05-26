@@ -3,9 +3,9 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xfirewalls.azureinfra.dockerdesktop.kishorekumar.today
+  name: xfirewalls.azureinfra.kishorekumar.today
 spec:
-  group: azureinfra.dockerdesktop.kishorekumar.today
+  group: azureinfra.kishorekumar.today
   names:
     kind: xFirewall
     plural: xfirewalls

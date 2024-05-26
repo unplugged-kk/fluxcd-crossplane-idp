@@ -6,7 +6,7 @@ metadata:
   name: xfirewalls-azure
 spec:
   compositeTypeRef:
-    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
     kind: xFirewall
   resources:
     - name: firewallpolicy

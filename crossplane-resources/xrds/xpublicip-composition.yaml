@@ -6,7 +6,7 @@ metadata:
   name: xpublicips-azure
 spec:
   compositeTypeRef:
-    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
     kind: xPublicIP
   resources:
     - name: publicip

@@ -1,7 +1,7 @@
 {{- if .Values.privateDNSZones }}
 {{- range $zone := .Values.privateDNSZones }}
 ---
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: PrivateDNSZoneClaim
 metadata:
   name: {{ $zone.name }}-claim

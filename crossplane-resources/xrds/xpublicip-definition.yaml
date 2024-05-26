@@ -3,9 +3,9 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xpublicips.azureinfra.dockerdesktop.kishorekumar.today
+  name: xpublicips.azureinfra.kishorekumar.today
 spec:
-  group: azureinfra.dockerdesktop.kishorekumar.today
+  group: azureinfra.kishorekumar.today
   names:
     kind: xPublicIP
     plural: xpublicips

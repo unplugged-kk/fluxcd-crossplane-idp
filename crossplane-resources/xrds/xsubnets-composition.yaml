@@ -7,7 +7,7 @@ metadata:
 spec:
   # Specifies the reference to the composite type for this Composition.
   compositeTypeRef:
-    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
     kind: xSubnet
   # Defines the list of resources managed by this Composition.
   resources:

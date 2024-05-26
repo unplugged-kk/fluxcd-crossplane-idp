@@ -1,5 +1,5 @@
 {{- if .Values.firewall }}
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: FirewallClaim
 metadata:
   name: {{ .Values.firewall.name }}-claim

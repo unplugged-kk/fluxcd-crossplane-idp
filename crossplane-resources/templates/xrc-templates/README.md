@@ -55,7 +55,7 @@ General syntax of Go templating considering Resource Group as example:
 `xresourcegroup-claim.yaml`
 
 ```yaml
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: xResourceGroupClaim
 metadata:
   name: {{ .Values.resourceGroup.name }}-claim

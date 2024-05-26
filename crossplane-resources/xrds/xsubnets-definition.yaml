@@ -2,10 +2,10 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xsubnets.azureinfra.dockerdesktop.kishorekumar.today
+  name: xsubnets.azureinfra.kishorekumar.today
 spec:
   # Specifies the API group where this CompositeResourceDefinition resides.
-  group: azureinfra.dockerdesktop.kishorekumar.today
+  group: azureinfra.kishorekumar.today
   names:
     # Specifies the kind and plural form of the resource.
     kind: xSubnet

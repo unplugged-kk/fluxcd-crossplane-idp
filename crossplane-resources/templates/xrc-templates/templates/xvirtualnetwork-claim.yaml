@@ -1,5 +1,5 @@
 {{- if .Values.virtualNetwork }}
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: VirtualNetworkClaim
 metadata:
   name: {{ .Values.virtualNetwork.name }}-claim

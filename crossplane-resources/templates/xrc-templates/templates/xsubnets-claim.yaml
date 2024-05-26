@@ -1,6 +1,6 @@
 {{- range .Values.subnets }}
 ---
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: SubnetClaim
 metadata:
   name: {{ .name }}-claim

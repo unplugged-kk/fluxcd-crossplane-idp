@@ -4,9 +4,9 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xresourcegroups.azureinfra.dockerdesktop.kishorekumar.today
+  name: xresourcegroups.azureinfra.kishorekumar.today
 spec:
-  group: azureinfra.dockerdesktop.kishorekumar.today
+  group: azureinfra.kishorekumar.today
   names:
     kind: xResourceGroup
     plural: xresourcegroups

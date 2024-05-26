@@ -1,6 +1,6 @@
 {{- range .Values.publicIPs }}
 ---
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: PublicIPClaim
 metadata:
   name: {{ .name }}-claim

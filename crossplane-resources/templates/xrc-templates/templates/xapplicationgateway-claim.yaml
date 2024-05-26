@@ -1,5 +1,5 @@
 {{- if .Values.appGateway }}
-apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
 kind: ApplicationGatewayClaim
 metadata:
   name: {{ .Values.appGateway.name }}-claim

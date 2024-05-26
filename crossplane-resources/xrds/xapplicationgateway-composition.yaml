@@ -6,7 +6,7 @@ metadata:
   name: xapplicationgateways-azure
 spec:
   compositeTypeRef:
-    apiVersion: azureinfra.dockerdesktop.kishorekumar.today/v1alpha1
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
     kind: xApplicationGateway
   resources:
     - name: applicationgateway
