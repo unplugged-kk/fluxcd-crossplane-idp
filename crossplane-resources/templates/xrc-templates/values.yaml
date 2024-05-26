@@ -1,9 +1,9 @@
 # ###
 
 
-namespace: kishore-azure-config
+namespace: kishore-idp-poc
 
-providerConfigRef: kodekloud-config
+providerConfigRef: kishore-azure-config
 
 resourceGroup:
   name: kodekloud-rg
