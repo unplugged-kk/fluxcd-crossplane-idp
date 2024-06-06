@@ -55,7 +55,7 @@ spec:
           {{- end }}
         zones:
           {{- range .zones }}
-          - {{ . }}
+          - "{{ . }}"
           {{- end }}
       {{- end }}
 ---
