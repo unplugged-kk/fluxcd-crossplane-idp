@@ -1,0 +1,87 @@
+namespace: test-landing-zone
+
+providerConfigRef: kishore-azure-config
+
+resourceGroup:
+  name: mdp-poc-resource-group
+  externalName: mdp-poc
+  location: West Europe
+
+## Commenting for further troubleshoot ##
+kubernetesClusters:
+  - name: mesh-cluster-test1
+    providerConfigRefName: kishore-azure-config
+    location: west-europe
+    resourceGroupName: mdp-poc
+    kubernetesVersion: 1.28.9
+    privateClusterEnabled: true
+    dnsPrefix: mesh-aks-dns
+    automaticChannelUpgrade: stable
+    httpApplicationRoutingEnabled: true
+    runCommandEnabled: true
+    identity:
+      - identityIds:
+          - "/subscriptions/1947901f-c34b-4ff0-98e7-0f0acf01b5a7/resourcegroups/mdp-poc/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-identity"
+        type: UserAssigned
+    networkProfile:
+      - dnsServiceIp: "10.0.0.10"
+        networkMode: ""
+        networkPlugin: "azure"
+        networkPolicy: "calico"
+        serviceCidrs:
+          - "10.0.0.0/16"
+    defaultNodePool:
+      - name: default
+        nodeCount: 1
+        maxCount: 5
+        minCount: 1
+        maxPods: 250
+        vmSize: Standard_DS2_v2
+        enableAutoScaling: true
+        temporaryNameForRotation: "temp-nodepool"
+        type: "VirtualMachineScaleSets"
+        upgradeSettings:
+          - maxSurge: "10%"
+        vnetSubnetId: "/subscriptions/1947901f-c34b-4ff0-98e7-0f0acf01b5a7/resourceGroups/mdp-poc/providers/Microsoft.Network/virtualNetworks/k8s-vnet/subnets/k8s-subnet"
+        zones:
+          - "1"
+          - "2"
+          - "3"
+  - name: mesh-cluster-test2
+    providerConfigRefName: kishore-azure-config
+    location: west-europe
+    resourceGroupName: mdp-poc
+    kubernetesVersion: 1.28.9
+    privateClusterEnabled: true
+    dnsPrefix: mesh-aks-dnss
+    automaticChannelUpgrade: stable
+    httpApplicationRoutingEnabled: true
+    runCommandEnabled: true
+    identity:
+      - identityIds:
+          - "/subscriptions/1947901f-c34b-4ff0-98e7-0f0acf01b5a7/resourcegroups/mdp-poc/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aks-identity"
+        type: UserAssigned
+    networkProfile:
+      - dnsServiceIp: "10.0.0.10"
+        networkMode: ""
+        networkPlugin: "azure"
+        networkPolicy: "calico"
+        serviceCidrs:
+          - "10.0.0.0/16"
+    defaultNodePool:
+      - name: default
+        nodeCount: 1
+        maxCount: 5
+        minCount: 1
+        maxPods: 250
+        vmSize: Standard_DS2_v2
+        enableAutoScaling: true
+        temporaryNameForRotation: "temp-nodepool"
+        type: "VirtualMachineScaleSets"
+        upgradeSettings:
+          - maxSurge: "10%"
+        vnetSubnetId: "/subscriptions/1947901f-c34b-4ff0-98e7-0f0acf01b5a7/resourceGroups/mdp-poc/providers/Microsoft.Network/virtualNetworks/k8s-vnet/subnets/k8s-subnet"
+        zones:
+          - "1"
+          - "2"
+          - "3"

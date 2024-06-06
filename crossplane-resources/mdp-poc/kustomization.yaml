@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - mdp-poc-helmelease.yaml
+configMapGenerator:
+  - name: mdp-poc-values
+    namespace: flux-system
+    files:
+      - mdp-poc-values.yaml
+generatorOptions:
+  disableNameSuffixHash: true

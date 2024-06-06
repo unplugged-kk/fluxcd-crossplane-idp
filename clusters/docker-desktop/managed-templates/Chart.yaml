@@ -1,0 +1,5 @@
+apiVersion: v2
+name: crossplane-managed-template
+description: A custom Helm chart for crossplane managed resource templates
+version: 0.1.0
+appVersion: 1.0.0
