@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: "./clusters/docker-desktop/managed-templates"
+      chart: "./managed-templates"
       sourceRef:
         kind: GitRepository
         name: fluxcd-crossplane-idp
