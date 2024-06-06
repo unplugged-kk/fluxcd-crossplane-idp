@@ -16,4 +16,4 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: mdp-poc-values
-      valuesKey: mpd-poc-values.yaml
+      valuesKey: mdp-poc-values.yaml
