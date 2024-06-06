@@ -19,44 +19,44 @@ spec:
     {{- if .identity }}
     identity:
       {{- range .identity }}
-      identityIds:
-        {{- range .identityIds }}
-        - {{ . }}
-        {{- end }}
-      type: {{ .type }}
+      - identityIds:
+          {{- range .identityIds }}
+          - {{ . }}
+          {{- end }}
+        type: {{ .type }}
       {{- end }}
     {{- end }}
     networkProfile:
       {{- range .networkProfile }}
-      dnsServiceIp: {{ .dnsServiceIp }}
-      networkMode: {{ .networkMode | quote }}
-      networkPlugin: {{ .networkPlugin }}
-      networkPolicy: {{ .networkPolicy }}
-      serviceCidrs:
-        {{- range .serviceCidrs }}
-        - {{ . }}
-        {{- end }}
+      - dnsServiceIp: {{ .dnsServiceIp }}
+        networkMode: {{ .networkMode | quote }}
+        networkPlugin: {{ .networkPlugin }}
+        networkPolicy: {{ .networkPolicy }}
+        serviceCidrs:
+          {{- range .serviceCidrs }}
+          - {{ . }}
+          {{- end }}
       {{- end }}
     defaultNodePool:
       {{- range .defaultNodePool }}
-      name: {{ .name }}
-      nodeCount: {{ .nodeCount }}
-      vmSize: {{ .vmSize }}
-      temporaryNameForRotation: {{ .temporaryNameForRotation }}
-      type: {{ .type }}
-      vnetSubnetId: {{ .vnetSubnetId }}
-      maxCount: {{ .maxCount }}
-      minCount: {{ .minCount }}
-      maxPods: {{ .maxPods }}
-      enableAutoScaling: {{ .enableAutoScaling }}
-      upgradeSettings:
-        {{- range .upgradeSettings }}
-        maxSurge: {{ .maxSurge }}
-        {{- end }}
-      zones:
-        {{- range .zones }}
-        - {{ . }}
-        {{- end }}
+      - name: {{ .name }}
+        nodeCount: {{ .nodeCount }}
+        vmSize: {{ .vmSize }}
+        temporaryNameForRotation: {{ .temporaryNameForRotation }}
+        type: {{ .type }}
+        vnetSubnetId: {{ .vnetSubnetId }}
+        maxCount: {{ .maxCount }}
+        minCount: {{ .minCount }}
+        maxPods: {{ .maxPods }}
+        enableAutoScaling: {{ .enableAutoScaling }}
+        upgradeSettings:
+          {{- range .upgradeSettings }}
+          - maxSurge: {{ .maxSurge }}
+          {{- end }}
+        zones:
+          {{- range .zones }}
+          - {{ . }}
+          {{- end }}
       {{- end }}
 ---
 {{- end }}
