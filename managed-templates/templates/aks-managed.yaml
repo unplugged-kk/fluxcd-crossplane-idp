@@ -20,8 +20,10 @@ spec:
     identity:
       {{- range .identity }}
       - identityIds:
+          {{- if .identityIds }}
           {{- range .identityIds }}
           - {{ . }}
+          {{- end }}
           {{- end }}
         type: {{ .type }}
       {{- end }}
