@@ -10,7 +10,7 @@ resources:
   - azure-provider/provider-azure-cosmosdb.yaml
   - azure-provider/provider-azure-dbforpostgresql.yaml
   - azure-provider/provider-azure-storage.yaml
-  - azure-provider/provider-azure-image.yaml
+  # - azure-provider/provider-azure-image.yaml
   - azure-provider/provider-azure-authorization.yaml
   - azure-provider/provider-azure-azuread.yaml
   - azure-provider/provider-azure-compute.yaml
