@@ -16,3 +16,4 @@ resources:
   - azure-provider/provider-azure-compute.yaml
   - azure-provider/provider-azure-managedidentity.yaml
   - azure-provider/provider-azure-provider-azure.yaml
+  - azure-provider/provider-azure-containerservice.yaml

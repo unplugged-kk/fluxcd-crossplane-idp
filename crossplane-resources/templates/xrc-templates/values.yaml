@@ -1,34 +1,34 @@
 # ###
 
 
-namespace: kishore-idp-poc
+namespace: test-sandbox-poc
 
 providerConfigRef: kishore-azure-config
 
 resourceGroup:
-  name: kodekloud-rg
-  externalName: kishore-kodekloud-rg
+  name: mdppoc-rg
+  externalName: mdp-poc
   location: West Europe
 
 virtualNetwork:
-  name: kishore-virtualnetwork
-  externalName: crossplane-vnet
-  addressSpace: 192.168.0.0/16
+  name: k8s-virtualnetwork
+  externalName: k8s-vnet
+  addressSpace: 10.1.0.0/16
   location: West Europe
 
 subnets:
-  - name: azure-firewall-subnet
-    externalName: AzureFirewallSubnet
-    subnetRef: kishore-firewall-subnet-ref
+  - name: k8s-subnet
+    externalName: k8s-subnet
+    subnetRef: k8s-subnet-subnet-ref
     addressPrefixes:
-      - 192.168.0.0/24
-    subnetName: AzureFirewallSubnet
-  - name: application-gateway-subnet
-    externalName: ApplicationGatewaySubnet
-    subnetRef: kishore-apgw-subnet-ref
-    addressPrefixes:
-      - 192.168.1.0/24
-    subnetName: ApplicationGatewaySubnet
+      - 10.1.1.0/24
+    subnetName: k8s-subnet
+#   - name: application-gateway-subnet
+#     externalName: ApplicationGatewaySubnet
+#     subnetRef: kishore-apgw-subnet-ref
+#     addressPrefixes:
+#       - 192.168.1.0/24
+#     subnetName: ApplicationGatewaySubnet
 
 # appGateway:
 #   name: kishore-app-gateway
