@@ -1,0 +1,9 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: uptest-resourcegroup
+spec:
+  forProvider:
+    location: West Europe
+  providerConfigRef:
+    name: kishore-azure-config
