@@ -11,7 +11,7 @@ resourceGroup:
 kubernetesClusters:
   - name: mesh-cluster-test1
     providerConfigRefName: kishore-azure-config
-    location: west-europe
+    location: West Europe
     resourceGroupName: mdp-poc
     kubernetesVersion: 1.28.9
     privateClusterEnabled: true
@@ -49,11 +49,11 @@ kubernetesClusters:
           - "3"
   - name: mesh-cluster-test2
     providerConfigRefName: kishore-azure-config
-    location: west-europe
+    location: West Europe
     resourceGroupName: mdp-poc
     kubernetesVersion: 1.28.9
     privateClusterEnabled: true
-    dnsPrefix: mesh-aks-dns
+    dnsPrefix: mesh-aks-dnss
     automaticChannelUpgrade: stable
     httpApplicationRoutingEnabled: true
     runCommandEnabled: true
