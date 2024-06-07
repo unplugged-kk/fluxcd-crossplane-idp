@@ -13,7 +13,7 @@ kubernetesClusters:
     providerConfigRefName: kishore-azure-config
     location: West Europe
     resourceGroupName: mdp-poc
-    kubernetesVersion: 1.28.9
+    kubernetesVersion: 1.28
     privateClusterEnabled: true
     dnsPrefix: mesh-aks-dns
     automaticChannelUpgrade: stable
