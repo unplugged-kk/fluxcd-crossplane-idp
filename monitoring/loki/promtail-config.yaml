@@ -1,0 +1,118 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # System Logs
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*.log
+
+  # Flux CD Logs
+  - job_name: fluxcd
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: fluxcd
+          __path__: /var/log/containers/*_flux-system_*.log
+
+  # Crossplane Logs
+  - job_name: crossplane
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: crossplane
+          __path__: /var/log/containers/*_crossplane-system_*.log
+
+  # Kubelet Logs
+  - job_name: kubelet
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: kubelet
+          __path__: /var/log/kubelet.log
+
+  # Kube-Proxy Logs
+  - job_name: kube-proxy
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: kube-proxy
+          __path__: /var/log/kube-proxy.log
+
+  # API Server Logs
+  - job_name: api-server
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: api-server
+          __path__: /var/log/kube-apiserver.log
+
+  # Controller Manager Logs
+  - job_name: controller-manager
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: controller-manager
+          __path__: /var/log/kube-controller-manager.log
+
+  # Scheduler Logs
+  - job_name: scheduler
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: scheduler
+          __path__: /var/log/kube-scheduler.log
+
+  # Application Logs
+  - job_name: application
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: application
+          __path__: /var/log/containers/*.log
+
+  # Kubernetes Audit Logs
+  - job_name: audit
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: audit
+          __path__: /var/log/kube-apiserver-audit.log
+
+  # Helm Logs
+  - job_name: helm
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: helm
+          __path__: /var/log/helm.log
+
+  # Custom Resource Definitions (CRDs) Logs
+  - job_name: crd
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: crd
+          __path__: /var/log/containers/*_crd-system_*.log

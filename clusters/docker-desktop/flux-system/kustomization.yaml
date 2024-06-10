@@ -6,3 +6,4 @@ resources:
   - crossplane-kustomization.yaml
   - managed-resource-kustomization.yaml
   # - mr-helm-kustomization.yaml
+  - monitoring-kustomization.yaml
