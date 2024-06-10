@@ -4,5 +4,5 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - crossplane-kustomization.yaml
-  # - managed-resource-kustomization.yaml
+  - managed-resource-kustomization.yaml
   # - mr-helm-kustomization.yaml
