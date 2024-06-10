@@ -1,0 +1,38 @@
+# The `xvirtualnetworks-azure` Composition is a configuration blueprint within Crossplane for managing Azure virtual networks. It streamlines the process of creating and managing Azure networking resources by combining various configurations into a single YAML definition. This Composition enables users to specify details such as address space, location, and resource group name, simplifying the deployment and management of Azure virtual networks within Kubernetes clusters.
+
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xvirtualnetworks-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
+    kind: xVirtualNetwork
+  resources:
+    - name: virtualnetwork
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: VirtualNetwork
+        metadata:
+          annotations:
+            crossplane.io/external-name: ""
+          labels:
+            vnet-ref: "kishore-vnet-ref"
+        spec:
+          forProvider:
+            addressSpace: [] # Specifies the address space for the virtual network
+            location: "" # Specifies the location where the virtual network will be deployed
+            resourceGroupName: "" # Specifies the name of the resource group associated with the virtual network
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.addressSpace"
+          toFieldPath: "spec.forProvider.addressSpace"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"

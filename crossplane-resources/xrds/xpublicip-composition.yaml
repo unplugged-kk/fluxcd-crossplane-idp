@@ -1,0 +1,43 @@
+# This YAML configuration defines a Composition resource in Crossplane for managing Azure Public IP addresses.
+# It establishes mappings between fields of an abstract "xPublicIP" and concrete Azure "PublicIP" instances.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xpublicips-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
+    kind: xPublicIP
+  resources:
+    - name: publicip
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: PublicIP
+        metadata:
+          annotations:
+            crossplane.io/external-name: ""
+          labels:
+            public-ip: ""
+        spec:
+          forProvider:
+            location: ""
+            allocationMethod: ""
+            resourceGroupName: ""
+            sku: ""
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "spec.parameters.allocationMethod"
+          toFieldPath: "spec.forProvider.allocationMethod"
+        - fromFieldPath: "spec.parameters.sku"
+          toFieldPath: "spec.forProvider.sku"
+        - fromFieldPath: "metadata.labels.public-ip"
+          toFieldPath: "metadata.labels.public-ip"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"

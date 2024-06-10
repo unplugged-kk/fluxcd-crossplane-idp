@@ -1,0 +1,62 @@
+{{- if .Values.firewall }}
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
+kind: FirewallClaim
+metadata:
+  name: {{ .Values.firewall.name }}-claim
+  namespace: {{ .Values.namespace }}
+spec:
+  compositionRef:
+    name: xfirewalls-azure
+  parameters:
+    location: {{ .Values.firewall.location }}
+    resourceGroupName: {{ .Values.resourceGroup.externalName }}
+    virtualNetworkName: {{ .Values.virtualNetwork.externalName }}
+    subnetName: {{ (index .Values.subnets 0).subnetName }}
+    firewallName: {{ .Values.firewall.name }}
+    skuName: {{ .Values.firewall.skuName }}
+    skuTier: {{ .Values.firewall.skuTier }}
+    firewallPolicyId: {{ .Values.firewall.firewallPolicyId }}
+    routeTableName: {{ .Values.firewall.routeTableName }}
+    addressPrefix: {{ .Values.firewall.addressPrefix }}
+    nextHopType: {{ .Values.firewall.nextHopType }}
+    nextHopInIpAddress: {{ .Values.firewall.nextHopInIpAddress }}
+    sku: {{ .Values.firewall.sku }}
+    basePolicyId: {{ .Values.firewall.basePolicyId }}
+    intrusionDetection:
+      - mode: {{ .Values.firewall.intrusionDetection.mode }}
+    threatIntelligenceMode: {{ .Values.firewall.threatIntelligenceMode }}
+    autoLearnPrivateRangesEnabled: {{ .Values.firewall.autoLearnPrivateRangesEnabled }}
+    firewallPolicyIdSelector:
+      matchLabels:
+        fw-policy-ref: {{ .Values.firewall.firewallPolicyIdSelector }}
+    priority: {{ .Values.firewall.priority }}
+    applicationRuleCollection:
+      - name: {{ .Values.firewall.applicationRuleCollection.name }}
+        action: {{ .Values.firewall.applicationRuleCollection.action }}
+        priority: {{ .Values.firewall.applicationRuleCollection.priority }}
+        rule:
+          - name: {{ .Values.firewall.applicationRuleCollection.rule.name }}
+            sourceAddresses:
+              {{- toYaml .Values.firewall.applicationRuleCollection.rule.sourceAddresses | nindent 14 }}
+            destinationFqdns:
+              {{- toYaml .Values.firewall.applicationRuleCollection.rule.destinationFqdns | nindent 14 }}
+            protocols:
+              - port: {{ .Values.firewall.applicationRuleCollection.rule.protocols.port }}
+                type: {{ .Values.firewall.applicationRuleCollection.rule.protocols.type }}
+    networkRuleCollection:
+      - name: {{ .Values.firewall.networkRuleCollection.name }}
+        action: {{ .Values.firewall.networkRuleCollection.action }}
+        priority: {{ .Values.firewall.networkRuleCollection.priority }}
+        rule:
+          - name: {{ .Values.firewall.networkRuleCollection.rule.name }}
+            sourceAddresses:
+              {{- toYaml .Values.firewall.networkRuleCollection.rule.sourceAddresses | nindent 14 }}
+            destinationAddresses:
+              {{- toYaml .Values.firewall.networkRuleCollection.rule.destinationAddresses | nindent 14 }}
+            destinationPorts:
+              {{- toYaml .Values.firewall.networkRuleCollection.rule.destinationPorts | nindent 14 }}
+            protocols:
+              {{- toYaml .Values.firewall.networkRuleCollection.rule.protocols | nindent 14 }}
+    providerConfigRef: 
+      name: {{ .Values.providerConfigRef }}
+{{- end }}               

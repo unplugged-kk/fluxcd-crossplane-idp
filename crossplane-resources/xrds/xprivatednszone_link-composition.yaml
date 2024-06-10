@@ -1,0 +1,60 @@
+# This YAML configuration defines a Composition in Crossplane for managing xPrivateDNSZone resources in Azure.
+# It specifies the composition of resources needed to create and manage Private DNS Zones and their associated resources.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xprivatednszones-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
+    kind: xPrivateDNSZone
+  resources:
+    - name: privatednszone
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: PrivateDNSZone
+        metadata:
+          annotations:
+            crossplane.io/external-name: ""
+          labels:
+            dns-ref: "kishore-dns-ref"
+        spec:
+          forProvider:
+            resourceGroupName: ""
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"
+
+    - name: privatednszonevirtualnetworklink
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: PrivateDNSZoneVirtualNetworkLink
+        metadata:
+          annotations:
+            crossplane.io/external-name: ""
+        spec:
+          forProvider:
+            resourceGroupName: ""
+            privateDnsZoneName: ""
+            virtualNetworkIdSelector:
+              matchLabels:
+                vnet-ref: ""
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "spec.parameters.privateDnsZoneName"
+          toFieldPath: "spec.forProvider.privateDnsZoneName"
+        - fromFieldPath: "spec.parameters.virtualNetworkIdSelector.matchLabels.vnet-ref"
+          toFieldPath: "spec.forProvider.virtualNetworkIdSelector.matchLabels.vnet-ref"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"

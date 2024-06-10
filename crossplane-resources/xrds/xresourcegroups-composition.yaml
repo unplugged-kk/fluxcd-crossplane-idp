@@ -1,0 +1,36 @@
+# This YAML configuration defines a Composition resource in Crossplane for managing Azure resource groups.
+# It maps the abstract "xResourceGroup" to concrete Azure "ResourceGroup" instances, facilitating resource group provisioning.
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xresourcegroups-azure
+spec:
+  compositeTypeRef:
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
+    kind: xResourceGroup
+  resources:
+    - name: resourcegroup
+      base:
+        apiVersion: azure.upbound.io/v1beta1
+        kind: ResourceGroup
+        metadata:
+          annotations:
+            crossplane.io/external-name: ""
+          # labels:
+          #   rg: "kishore-rg-reference"
+        spec:
+          forProvider:
+            location: "West Europe"
+          providerConfigRef:
+            name: ""
+      patches:
+        - fromFieldPath: "spec.parameters.location"
+          toFieldPath: "spec.forProvider.location"
+        - fromFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"
+          policy:
+            fromFieldPath: Required
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        # - fromFieldPath: "metadata.labels"
+        #   toFieldPath: "metadata.labels"
