@@ -21,10 +21,10 @@ spec:
           annotations:
             description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
             summary: High request error rate
+            severity: page
           expr: rate(http_requests_total{status="500"}[5m]) > 0.05
           for: 10m
-          labels:
-            severity: page
+
     alertmanager:
       enabled: true
     coreDns:
