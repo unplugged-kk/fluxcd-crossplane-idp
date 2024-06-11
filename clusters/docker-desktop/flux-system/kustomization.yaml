@@ -5,8 +5,8 @@ resources:
   - gotk-sync.yaml
   - crossplane-kustomization.yaml
   - gitrepository-fluxcd-crossplane-idp.yaml
-  - managed-resource-kustomization.yaml
+  # - managed-resource-kustomization.yaml
   - mr-helm-kustomization.yaml
   - helmrepository-grafana.yaml
   - helmrepository-prometheus-community.yaml
-  # - monitoring-kustomization.yaml
+  - monitoring-kustomization.yaml
