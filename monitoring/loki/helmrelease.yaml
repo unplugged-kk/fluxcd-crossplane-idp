@@ -22,3 +22,6 @@ spec:
       enabled: true
       config:
         existingConfigMap: promtail-config
+    service:
+      type: NodePort
+      nodePort: 31001 # You can specify a NodePort or let Kubernetes choose one
