@@ -4,6 +4,7 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - crossplane-kustomization.yaml
+  - gitrepository-fluxcd-crossplane-idp.yaml
   - managed-resource-kustomization.yaml
   - mr-helm-kustomization.yaml
   - helmrepository-grafana.yaml
