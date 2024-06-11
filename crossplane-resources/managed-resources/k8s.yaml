@@ -1,6 +1,8 @@
 apiVersion: containerservice.azure.upbound.io/v1beta1
 kind: KubernetesCluster
 metadata:
+  labels:
+    aks-name: mesh-cluster
   name: mesh-cluster
 spec:
   providerConfigRef:
@@ -25,6 +27,8 @@ spec:
         networkPolicy: "calico"
         serviceCidrs:
           - "10.0.0.0/16"
+        podCidrs:
+          - "10.1.128.0/17"
     defaultNodePool:
       - name: default
         nodeCount: 3
@@ -42,3 +46,7 @@ spec:
           - "1"
           - "2"
           - "3"
+    linuxProfile:
+      - adminUsername: "ansible"
+        sshKey:
+          - keyData: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1BAAfPuD/vE7t+5z+dz7YQepiU+7NYqtHtpept1k+LsIhtx5RiNGTBeo7pLa87ODNCbz5cvM7DS67YahgdX3hF0wibroERNpmdL8J1Uokn3r/kXfK3qU/RzYP71doR5kpxwq2z7qBgbMvjC2WoD45rvaDTPf+0eyoObcTHt4gOBQb1Ic9y377IPd9qxYhw7vJwqFjNF46qKChEVKRl2+yA79B3JiXsMdOnGk1qtBWz2gVBrhgxYS3985Ry75eOinLCjibmzQYnqoqvxw2MHU16RILNYYnOW7Q++PyfM4Yxoa6Vq3gZxDMkTwKTBrcLvOmukkFwL5/m/U75xb53ZDiZ0lxWEXiq6FnoK91M1dUL6V5upMTCJJOKfZInwK465UwhZOX7GC8wr1/hyXP2w4p8Vxs2k4vWKsPziM48yVJgEQra+wHV5Hg5T/nIPL0sCLWf6kNjxRFXyGl36kQgeoTy3A92JJ7vUkgctRCKFNnZ23mNbWgYJBZhlaq084iKHE="

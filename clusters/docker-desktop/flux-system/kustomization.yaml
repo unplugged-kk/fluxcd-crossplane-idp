@@ -8,4 +8,4 @@ resources:
   # - mr-helm-kustomization.yaml
   - helmrepository-grafana.yaml
   - helmrepository-prometheus-community.yaml
-  - monitoring-kustomization.yaml
+  # - monitoring-kustomization.yaml
