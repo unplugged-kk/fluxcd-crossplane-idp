@@ -1,18 +1,60 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prometheus
+  name: prometheus-operator
   namespace: monitoring
 spec:
   interval: 5m
   chart:
     spec:
-      chart: prometheus
+      chart: kube-prometheus-stack
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
+      version: 39.6.0
   values:
-    server:
-      global:
-        scrape_interval: 30s
+    nodeExporter:
+      hostRootFsMount: false
+    kubeEtcd:
+      enabled: false
+    kubeEtcdServiceMonitor:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeControllerManagerServiceMonitor:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeSchedulerServiceMonitor:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeProxyServiceMonitor:
+      enabled: false
+    coreDns:
+      enabled: false
+    coreDnsServiceMonitor:
+      enabled: false
+    kubeDns:
+      enabled: false
+    kubeDnsServiceMonitor:
+      enabled: false
+    alertmanager:
+      enabled: true
+    prometheus:
+      prometheusSpec:
+        scrapeInterval: "30s"
+        evaluationInterval: "30s"
+    additionalPrometheusRules:
+      - groups:
+          - name: custom.rules
+            rules:
+              - alert: HighErrorRate
+                expr: rate(http_requests_total{status="500"}[5m]) > 0.05
+                for: 10m
+                labels:
+                  severity: page
+                annotations:
+                  summary: "High request error rate"
+                  description: "More than 5% of the requests are failing with 500 errors in the last 10 minutes."
