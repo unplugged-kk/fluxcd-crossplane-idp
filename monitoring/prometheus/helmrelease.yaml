@@ -15,6 +15,41 @@ spec:
       version: 60.0.2
   values:
     prometheusRuleSelectorNilUsesHelmValues: false
+    defaultRules:
+      rules:
+        alertmanager: true
+        etcd: true
+        general: true
+        kubeApiserver: true
+        kubePrometheusNodeAlerting: true
+        kubePrometheusNodeRecording: true
+        kubeScheduler: true
+        kubeStateMetrics: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        node: true
+        prometheus: true
+        prometheusOperator: true
+    prometheus:
+      prometheusSpec:
+        ruleSelector:
+          matchLabels:
+            role: alert-rules
+        ruleNamespaceSelector: {}
+    additionalPrometheusRulesMap: |
+      prometheus:
+        - alert: HighErrorRate
+          annotations:
+            description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
+            summary: High request error rate
+          expr: rate(http_requests_total{status="500"}[5m]) > 0.05
+          for: 10m
+          labels:
+            severity: page
+    alertmanager:
+      enabled: true
     nodeExporter:
       hostRootFsMount: false
     kubeEtcd:
@@ -41,21 +76,3 @@ spec:
       enabled: false
     kubeDnsServiceMonitor:
       enabled: false
-    alertmanager:
-      enabled: true
-    prometheus:
-      prometheusSpec:
-        scrapeInterval: "30s"
-        evaluationInterval: "30s"
-    additionalPrometheusRules:
-      - groups:
-          - name: custom.rules
-            rules:
-              - alert: HighErrorRate
-                expr: rate(http_requests_total{status="500"}[5m]) > 0.05
-                for: 10m
-                labels:
-                  severity: page
-                annotations:
-                  summary: "High request error rate"
-                  description: "More than 5% of the requests are failing with 500 errors in the last 10 minutes."
