@@ -6,4 +6,6 @@ resources:
   - crossplane-kustomization.yaml
   - managed-resource-kustomization.yaml
   # - mr-helm-kustomization.yaml
+  - helmrepository-grafana.yaml
+  - helmrepository-prometheus-community.yaml
   - monitoring-kustomization.yaml
