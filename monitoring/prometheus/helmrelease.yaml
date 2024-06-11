@@ -12,7 +12,9 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
+      version: 60.0.2
   values:
+    prometheusRuleSelectorNilUsesHelmValues: false
     nodeExporter:
       hostRootFsMount: false
     kubeEtcd:
