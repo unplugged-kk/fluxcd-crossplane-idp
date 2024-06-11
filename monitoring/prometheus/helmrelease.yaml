@@ -15,6 +15,48 @@ spec:
       version: 60.0.2
   values:
     prometheusRuleSelectorNilUsesHelmValues: false
+    additionalPrometheusRulesMap:
+      additionalPrometheusRules:
+        - alert: HighErrorRate
+          annotations:
+            description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
+            summary: High request error rate
+          expr: rate(http_requests_total{status="500"}[5m]) > 0.05
+          for: 10m
+          labels:
+            severity: page
+    alertmanager:
+      enabled: true
+    coreDns:
+      enabled: false
+    coreDnsServiceMonitor:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    kubeEtcdServiceMonitor:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeControllerManagerServiceMonitor:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeSchedulerServiceMonitor:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeProxyServiceMonitor:
+      enabled: false
+    nodeExporter:
+      hostRootFsMount: false
+    prometheus:
+      prometheusSpec:
+        scrapeInterval: "30s"
+        evaluationInterval: "30s"
+        ruleSelector:
+          matchLabels:
+            role: alert-rules
+        ruleNamespaceSelector: {}
     defaultRules:
       rules:
         alertmanager: true
@@ -32,47 +74,3 @@ spec:
         node: true
         prometheus: true
         prometheusOperator: true
-    prometheus:
-      prometheusSpec:
-        ruleSelector:
-          matchLabels:
-            role: alert-rules
-        ruleNamespaceSelector: {}
-    additionalPrometheusRulesMap: |
-      prometheus:
-        - alert: HighErrorRate
-          annotations:
-            description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
-            summary: High request error rate
-          expr: rate(http_requests_total{status="500"}[5m]) > 0.05
-          for: 10m
-          labels:
-            severity: page
-    alertmanager:
-      enabled: true
-    nodeExporter:
-      hostRootFsMount: false
-    kubeEtcd:
-      enabled: false
-    kubeEtcdServiceMonitor:
-      enabled: false
-    kubeControllerManager:
-      enabled: false
-    kubeControllerManagerServiceMonitor:
-      enabled: false
-    kubeScheduler:
-      enabled: false
-    kubeSchedulerServiceMonitor:
-      enabled: false
-    kubeProxy:
-      enabled: false
-    kubeProxyServiceMonitor:
-      enabled: false
-    coreDns:
-      enabled: false
-    coreDnsServiceMonitor:
-      enabled: false
-    kubeDns:
-      enabled: false
-    kubeDnsServiceMonitor:
-      enabled: false
