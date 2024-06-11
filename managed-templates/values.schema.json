@@ -1,5 +1,5 @@
 {
-    "": "http://json-schema.org/draft-07/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
         "kubernetesClusters": {
@@ -61,6 +61,32 @@
                             ]
                         }
                     },
+                    "linuxProfile": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "sshKey": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "keyData": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "adminUsername": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "sshKey",
+                                "adminUsername"
+                            ]
+                        }
+                    },
                     "networkProfile": {
                         "type": "array",
                         "items": {
@@ -79,6 +105,12 @@
                                     "type": "string"
                                 },
                                 "serviceCidrs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "podCidrs": {
                                     "type": "array",
                                     "items": {
                                         "type": "string"
@@ -167,13 +199,10 @@
                     "automaticChannelUpgrade",
                     "identity",
                     "networkProfile",
-                    "defaultNodePool"
+                    "defaultNodePool",
+                    "linuxProfile"
                 ]
-            },
-            "required": [
-                "namespace",
-                "resourceGroup"
-            ]
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ apiVersion: containerservice.azure.upbound.io/v1beta1
 kind: KubernetesCluster
 metadata:
   name: {{ .name }}
+  labels:
+    aks-name: {{ .name }}
 spec:
   providerConfigRef:
     name: {{ .providerConfigRefName }}
@@ -38,6 +40,10 @@ spec:
           {{- range .serviceCidrs }}
           - {{ . }}
           {{- end }}
+        podCidrs:
+          {{- range .podCidrs }}
+          - {{ . }}
+          {{- end }}  
       {{- end }}
     defaultNodePool:
       {{- range .defaultNodePool }}
@@ -60,6 +66,18 @@ spec:
           - "{{ . }}"
           {{- end }}
       {{- end }}
+    {{- if .linuxProfile }}
+    linuxProfile:
+      {{- range .linuxProfile }}
+      - adminUsername: {{ .adminUsername }}
+        sshKey:
+          {{- if .sshKey }}
+          {{- range .sshKey }}
+          - keyData: {{ .keyData | quote }}
+          {{- end }}
+      {{- end }}
+    {{- end }}
 ---
+{{- end }}
 {{- end }}
 {{- end }}
