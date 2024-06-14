@@ -15,19 +15,16 @@ spec:
       version: 60.0.2
   values:
     prometheusRuleSelectorNilUsesHelmValues: false
-    additionalPrometheusRules:
-      - name: custom-rules
-        groups:
-          - name: my_alerts
-            rules:
-              - alert: HighErrorRate
-                annotations:
-                  description: More than 5% of requests are failing with 500 errors
-                  summary: High request error rate
-                expr: rate(http_requests_total{status="500"}[5m]) > 0.05
-                for: 10m
-                labels:
-                  severity: page
+    additionalPrometheusRulesMap:
+      additionalPrometheusRules:
+        - alert: HighErrorRate
+          annotations:
+            description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
+            summary: High request error rate
+          expr: rate(http_requests_total{status="500"}[5m]) > 0.05
+          for: 10m
+          labels:
+            severity: page
     alertmanager:
       enabled: true
     coreDns:
@@ -52,6 +49,10 @@ spec:
       enabled: false
     nodeExporter:
       hostRootFsMount: false
+      extraArgs:
+        - --path.procfs=/proc
+        - --path.sysfs=/sys
+        - --web.listen-address=0.0.0.0:9100
     prometheus:
       prometheusSpec:
         scrapeInterval: "30s"
