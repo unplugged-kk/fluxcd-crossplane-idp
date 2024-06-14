@@ -14,53 +14,25 @@ spec:
         namespace: flux-system
       version: 60.0.2
   values:
-    prometheusRuleSelectorNilUsesHelmValues: false
     additionalPrometheusRulesMap:
-      additionalPrometheusRules:
-        - alert: HighErrorRate
-          annotations:
-            description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
-            summary: High request error rate
-          expr: rate(http_requests_total{status="500"}[5m]) > 0.05
-          for: 10m
-          labels:
-            severity: page
+      custom-rules:
+        groups:
+          - name: my_alerts
+            rules:
+              - alert: HighErrorRate
+                expr: rate(http_requests_total{status="500"}[5m]) > 0.05
+                for: 10m
+                labels:
+                  severity: page
+                annotations:
+                  summary: High request error rate
+                  description: More than 5% of the requests are failing with 500 errors in the last 10 minutes.
     alertmanager:
       enabled: true
     coreDns:
       enabled: false
     coreDnsServiceMonitor:
       enabled: false
-    kubeEtcd:
-      enabled: false
-    kubeEtcdServiceMonitor:
-      enabled: false
-    kubeControllerManager:
-      enabled: false
-    kubeControllerManagerServiceMonitor:
-      enabled: false
-    kubeScheduler:
-      enabled: false
-    kubeSchedulerServiceMonitor:
-      enabled: false
-    kubeProxy:
-      enabled: false
-    kubeProxyServiceMonitor:
-      enabled: false
-    nodeExporter:
-      hostRootFsMount: false
-      extraArgs:
-        - --path.procfs=/proc
-        - --path.sysfs=/sys
-        - --web.listen-address=0.0.0.0:9100
-    prometheus:
-      prometheusSpec:
-        scrapeInterval: "30s"
-        evaluationInterval: "30s"
-        ruleSelector:
-          matchLabels:
-            role: alert-rules
-        ruleNamespaceSelector: {}
     defaultRules:
       rules:
         alertmanager: true
@@ -78,3 +50,34 @@ spec:
         node: true
         prometheus: true
         prometheusOperator: true
+    kubeControllerManager:
+      enabled: false
+    kubeControllerManagerServiceMonitor:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+    kubeEtcdServiceMonitor:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeProxyServiceMonitor:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeSchedulerServiceMonitor:
+      enabled: false
+    nodeExporter:
+      extraArgs:
+        - --path.procfs=/proc
+        - --path.sysfs=/sys
+        - --web.listen-address=0.0.0.0:9100
+      hostRootFsMount: false
+    prometheus:
+      prometheusSpec:
+        scrapeInterval: "30s"
+        evaluationInterval: "30s"
+        ruleSelector:
+          matchLabels:
+            role: alert-rules
+        ruleNamespaceSelector: {}
+    prometheusRuleSelectorNilUsesHelmValues: false
