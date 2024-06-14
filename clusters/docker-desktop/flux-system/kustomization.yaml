@@ -10,3 +10,4 @@ resources:
   - helmrepository-grafana.yaml
   - helmrepository-prometheus-community.yaml
   - monitoring-kustomization.yaml
+  - xrds.yaml
