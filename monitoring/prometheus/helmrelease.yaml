@@ -71,6 +71,24 @@ spec:
         - --path.procfs=/proc
         - --path.sysfs=/sys
         - --web.listen-address=0.0.0.0:9100
+      volumes:
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: sys
+          hostPath:
+            path: /sys
+        - name: root
+          hostPath:
+            path: /
+      volumeMounts:
+        - mountPath: /host/proc
+          name: proc
+        - mountPath: /host/sys
+          name: sys
+        - mountPath: /host/root
+          name: root
+          mountPropagation: None
       hostRootFsMount: false
     prometheus:
       prometheusSpec:
