@@ -13,7 +13,7 @@ spec:
         name: grafana
         namespace: flux-system
   values:
-    deploymentMode: SingleBinary
+    deploymentMode: SimpleScalable
     loki:
       commonConfig:
         replication_factor: 1
@@ -33,13 +33,13 @@ spec:
           retention_deletes_enabled: true
           retention_period: 168h
     singleBinary:
+      replicas: 0
+    read:
       replicas: 1
-      read:
-        replicas: 0
-      backend:
-        replicas: 0
-      write:
-        replicas: 0
+    write:
+      replicas: 1
+    backend:
+      replicas: 1
     promtail:
       enabled: true
       config:
