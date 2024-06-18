@@ -22,19 +22,19 @@ spec:
       - --port=8090
     livenessProbe:
       httpGet:
-        path: /status
+        path: /
         port: 8090
-      initialDelaySeconds: 60
-      periodSeconds: 10
-      timeoutSeconds: 5
+      initialDelaySeconds: 120
+      periodSeconds: 20
+      timeoutSeconds: 10
       successThreshold: 1
       failureThreshold: 5
     readinessProbe:
       httpGet:
-        path: /status
+        path: /
         port: 8090
-      initialDelaySeconds: 60
-      periodSeconds: 10
-      timeoutSeconds: 5
+      initialDelaySeconds: 120
+      periodSeconds: 20
+      timeoutSeconds: 10
       successThreshold: 1
       failureThreshold: 5
