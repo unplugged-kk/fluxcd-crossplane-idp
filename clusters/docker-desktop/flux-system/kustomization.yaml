@@ -12,3 +12,4 @@ resources:
   # - monitoring-kustomization.yaml
   - xrds.yaml
   - cert-manager-kustomization.yaml
+  - ingress-nginx-kustomization.yaml
