@@ -20,3 +20,21 @@ spec:
       type: NodePort
     extraArgs:
       - --port=8090
+    livenessProbe:
+      httpGet:
+        path: /status
+        port: 8090
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+    readinessProbe:
+      httpGet:
+        path: /status
+        port: 8090
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
