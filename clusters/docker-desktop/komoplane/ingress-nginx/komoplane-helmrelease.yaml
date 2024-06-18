@@ -1,0 +1,22 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: komoplane
+  namespace: komoplane
+spec:
+  chart:
+    spec:
+      chart: komoplane
+      sourceRef:
+        kind: HelmRepository
+        name: komodorio
+        namespace: flux-system
+      version: "0.1.5"
+  install:
+    createNamespace: true
+  interval: 5m
+  values:
+    service:
+      type: NodePort
+    extraArgs:
+      - --port=8090

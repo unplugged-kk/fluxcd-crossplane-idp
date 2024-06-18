@@ -13,3 +13,4 @@ resources:
   - xrds.yaml
   - cert-manager-kustomization.yaml
   - ingress-nginx-kustomization.yaml
+  - komoplane-kustomization.yaml
