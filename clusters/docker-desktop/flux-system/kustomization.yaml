@@ -11,3 +11,4 @@ resources:
   # - helmrepository-prometheus-community.yaml
   # - monitoring-kustomization.yaml
   - xrds.yaml
+  - cert-manager-kustomization.yaml
