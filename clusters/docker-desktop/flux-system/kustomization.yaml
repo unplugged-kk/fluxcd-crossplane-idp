@@ -16,3 +16,4 @@ resources:
   - komoplane-kustomization.yaml
   - capacitor-oci.yaml
   - capacitor-kustomization.yaml
+  - cert-deploy-kustomization.yaml
