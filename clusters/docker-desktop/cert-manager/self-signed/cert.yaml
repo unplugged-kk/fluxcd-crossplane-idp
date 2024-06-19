@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: capacitor-selfsigned-tls
+  namespace: flux-system
+spec:
+  secretName: capacitor-selfsigned-tls
+  issuerRef:
+    name: ca-issuer
+    kind: Issuer
+  commonName: capacitor.local
+  dnsNames:
+    - capacitor.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: komoplane-selfsigned-tls
+  namespace: komoplane
+spec:
+  secretName: komoplane-selfsigned-tls
+  issuerRef:
+    name: ca-issuer
+    kind: Issuer
+  commonName: komoplane.local
+  dnsNames:
+    - komoplane.local

@@ -4,5 +4,4 @@ resources:
   - cert-manager-namespace.yaml
   - cert-manager-helmrelease.yaml
   - helmrepository.yaml
-  - cert-issuer.yaml
-  - cert.yaml
+  - self-signed

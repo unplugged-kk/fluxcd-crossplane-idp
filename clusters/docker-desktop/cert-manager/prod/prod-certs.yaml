@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: capacitor-prod-tls
+  namespace: flux-system
+spec:
+  secretName: capacitor-prod-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: capacitor.example.com
+  dnsNames:
+    - capacitor.example.com
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: komoplane-prod-tls
+  namespace: komoplane
+spec:
+  secretName: komoplane-prod-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: komoplane.example.com
+  dnsNames:
+    - komoplane.example.com
