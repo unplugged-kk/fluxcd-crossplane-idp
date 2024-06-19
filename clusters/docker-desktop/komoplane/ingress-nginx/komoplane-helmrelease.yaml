@@ -17,6 +17,6 @@ spec:
   interval: 5m
   values:
     service:
-      type: NodePort
+      type: ClusterIP
     extraArgs:
       - --bind=0.0.0.0
