@@ -6,8 +6,8 @@ metadata:
 spec:
   secretName: capacitor-selfsigned-tls
   issuerRef:
-    name: ca-cluster-issuer
-    kind: ClusterIssuer
+    name: ca-issuer
+    kind: Issuer
   commonName: capacitor.local
   dnsNames:
     - capacitor.local
@@ -20,8 +20,8 @@ metadata:
 spec:
   secretName: komoplane-selfsigned-tls
   issuerRef:
-    name: ca-cluster-issuer
-    kind: ClusterIssuer
+    name: ca-issuer
+    kind: Issuer
   commonName: komoplane.local
   dnsNames:
     - komoplane.local
