@@ -5,3 +5,4 @@ metadata:
 spec:
   ca:
     secretName: ca-cert
+    secretNamespace: flux-system
