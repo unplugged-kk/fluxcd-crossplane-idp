@@ -12,10 +12,9 @@ spec:
     kind: Issuer
 ---
 apiVersion: cert-manager.io/v1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
-  name: ca-issuer
-  namespace: flux-system
+  name: ca-cluster-issuer
 spec:
   ca:
     secretName: ca-cert
