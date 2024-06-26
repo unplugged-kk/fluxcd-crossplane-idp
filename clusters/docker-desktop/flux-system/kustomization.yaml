@@ -17,3 +17,4 @@ resources:
   - capacitor-oci.yaml
   - capacitor-kustomization.yaml
   - cert-deploy-kustomization.yaml
+  - helm-dashboard-kustomization.yaml
