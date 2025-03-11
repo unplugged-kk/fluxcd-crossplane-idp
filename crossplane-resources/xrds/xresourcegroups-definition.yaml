@@ -1,0 +1,49 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing Azure resource groups.
+# It establishes mappings between fields of an abstract "xResourceGroup" and concrete Azure "ResourceGroup" instances.
+# This XRD facilitates the creation, management, and lifecycle of Azure resource groups within Kubernetes environments.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xresourcegroups.azureinfra.kishorekumar.today
+spec:
+  group: azureinfra.kishorekumar.today
+  names:
+    kind: xResourceGroup
+    plural: xresourcegroups
+  claimNames:
+    kind: ResourceGroupClaim
+    plural: resourcegroupclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    location:
+                      type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required: ["location"]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                observedGeneration:
+                  type: integer
+                conditions:
+                  type: array
+                  items:
+                    type: object
+                connectionDetails:
+                  type: object

@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oauth2-proxy
+  namespace: oauth-proxy
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: oauth2-proxy
+      version: "7.7.8"
+      sourceRef:
+        kind: HelmRepository
+        name: oauth2-proxy
+        namespace: oauth-proxy
+  values:
+    config:
+      existingSecret: oauth2-proxy-azure-secret
+      configFile: |-
+        provider = "azure"
+        oidc_issuer_url = "https://login.microsoftonline.com/05d75c05-fa1a-42e7-9cf1-eb416c396f2d/v2.0"
+        email_domains = ["*"]
+        cookie_secure = true
+        cookie_domains = [".kishore.xyz"]
+        whitelist_domains = [".kishore.xyz"]
+        upstreams = ["file:///dev/null"]
+    extraArgs:
+      - --provider=azure
+      - --azure-tenant=05d75c05-fa1a-42e7-9cf1-eb416c396f2d
+    sessionStorage:
+      type: cookie
+    # ingress:
+    #   enabled: true
+    #   className: azure-application-gateway
+    #   annotations:
+    #     appgw.ingress.kubernetes.io/backend-protocol: "http"
+    #     appgw.ingress.kubernetes.io/health-probe-interval: "30"
+    #     appgw.ingress.kubernetes.io/health-probe-timeout: "30"
+    #     appgw.ingress.kubernetes.io/health-probe-unhealthy-threshold: "3"
+    #   hosts:
+    #     - host: auth.kishore.xyz
+    #       paths:
+    #         - path: /
+    #           pathType: Prefix
+    #   tls:
+    #     - hosts:
+    #         - auth.kishore.xyz
+    #       secretName: oauth-tls-secret-letsencrypt
+    resources:
+      limits:
+        cpu: 100m
+        memory: 300Mi
+      requests:
+        cpu: 100m
+        memory: 300Mi
+    probes:
+      liveness:
+        enabled: true
+        initialDelaySeconds: 0
+        timeoutSeconds: 1
+      readiness:
+        enabled: true
+        initialDelaySeconds: 0
+        timeoutSeconds: 1
+    metrics:
+      enabled: true
+      port: 44180
+    podDisruptionBudget:
+      enabled: true
+      minAvailable: 1
+    service:
+      type: ClusterIP
+      portNumber: 80

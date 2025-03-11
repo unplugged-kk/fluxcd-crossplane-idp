@@ -1,0 +1,50 @@
+# The `xsubnets-azure` Composition is a configuration blueprint within Crossplane for managing Azure subnets. It streamlines the process of creating and managing Azure networking resources by combining various configurations into a single YAML definition. This Composition allows users to specify details like address prefixes, virtual network names, and resource group names, simplifying the deployment and management of Azure subnets within Kubernetes clusters.
+
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xsubnets-azure
+spec:
+  # Specifies the reference to the composite type for this Composition.
+  compositeTypeRef:
+    apiVersion: azureinfra.kishorekumar.today/v1alpha1
+    kind: xSubnet
+  # Defines the list of resources managed by this Composition.
+  resources:
+    - name: subnet
+      base:
+        # Specifies the API version and kind of the underlying resource.
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: Subnet
+        spec:
+          forProvider:
+            # Specifies the address prefixes for the subnet.
+            addressPrefixes: [] # Ensure this is expecting an array
+            # Specifies the name of the virtual network associated with the subnet.
+            virtualNetworkName: ""
+            # Specifies the name of the resource group associated with the subnet.
+            resourceGroupName: ""
+            # The name of the subnet will be set using the external-name annotation.
+            metadata:
+              annotations:
+                crossplane.io/external-name: ""
+              labels:
+                # Specifies the label for the subnet reference.
+                subnet-ref: ""
+          # Specifies the reference to the provider configuration.
+          providerConfigRef:
+            name: ""
+      patches:
+        # Defines patches to map fields from Composition parameters to resource fields.
+        - fromFieldPath: "spec.parameters.providerConfigRef.name"
+          toFieldPath: "spec.providerConfigRef.name"
+        - fromFieldPath: "spec.parameters.addressPrefixes"
+          toFieldPath: "spec.forProvider.addressPrefixes"
+        - fromFieldPath: "spec.parameters.virtualNetworkName"
+          toFieldPath: "spec.forProvider.virtualNetworkName"
+        - fromFieldPath: "metadata.labels[subnet-ref]"
+          toFieldPath: "metadata.labels[subnet-ref]"
+        - fromFieldPath: "spec.parameters.resourceGroupName"
+          toFieldPath: "spec.forProvider.resourceGroupName"
+        - fromFieldPath: "spec.parameters.subnetName"
+          toFieldPath: "metadata.annotations[crossplane.io/external-name]"

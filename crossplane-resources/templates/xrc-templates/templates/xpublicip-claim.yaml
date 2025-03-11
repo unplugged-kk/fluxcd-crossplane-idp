@@ -1,0 +1,22 @@
+{{- range .Values.publicIPs }}
+---
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
+kind: PublicIPClaim
+metadata:
+  name: {{ .name }}-claim
+  namespace: {{ $.Values.namespace }}
+  labels:
+    public-ip: {{ .publicIPLabel }}
+  annotations:
+    crossplane.io/external-name: {{ .externalName }}  
+spec:
+  compositionRef:
+    name: xpublicips-azure
+  parameters:
+    location: {{ .location }}
+    resourceGroupName: {{ $.Values.resourceGroup.externalName }}
+    allocationMethod: {{ .allocationMethod }}
+    sku: {{ .sku }}
+    providerConfigRef: 
+      name: {{ $.Values.providerConfigRef }}
+{{- end }}

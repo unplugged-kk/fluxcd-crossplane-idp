@@ -1,0 +1,51 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing xPublicIPs in Azure via Crossplane.
+# It provides the schema for defining xPublicIP instances, specifying required parameters for provisioning Azure Public IP addresses.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xpublicips.azureinfra.kishorekumar.today
+spec:
+  group: azureinfra.kishorekumar.today
+  names:
+    kind: xPublicIP
+    plural: xpublicips
+  claimNames:
+    kind: PublicIPClaim
+    plural: publicipclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    location:
+                      type: string
+                    resourceGroupName:
+                      type: string
+                    allocationMethod:
+                      type: string
+                    sku:
+                      type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required:
+                    ["location", "allocationMethod", "resourceGroupName", "sku"]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object

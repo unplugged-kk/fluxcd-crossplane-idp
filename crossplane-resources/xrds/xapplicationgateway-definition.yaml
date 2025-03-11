@@ -1,0 +1,156 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing xApplicationGateways in Azure via Crossplane.
+# It establishes the schema and specifications necessary for creating and managing xApplicationGateways instances in Azure.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xapplicationgateways.azureinfra.kishorekumar.today
+spec:
+  group: azureinfra.kishorekumar.today
+  names:
+    kind: xApplicationGateway
+    plural: xapplicationgateways
+  claimNames:
+    kind: ApplicationGatewayClaim
+    plural: applicationgatewayclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    location:
+                      type: string
+                    sku:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          tier:
+                            type: string
+                          capacity:
+                            type: number
+                    frontendIpConfiguration:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          publicIpAddressIdSelector:
+                            type: object
+                            properties:
+                              matchLabels:
+                                type: object
+                                properties:
+                                  public-ip:
+                                    type: string
+                    frontendPort:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          port:
+                            type: number
+                    httpListener:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          frontendIpConfigurationName:
+                            type: string
+                          frontendPortName:
+                            type: string
+                          protocol:
+                            type: string
+                    gatewayIpConfiguration:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          subnetIdSelector:
+                            type: object
+                            properties:
+                              matchLabels:
+                                type: object
+                                properties:
+                                  subnet-ref:
+                                    type: string
+                    resourceGroupNameSelector:
+                      type: object
+                      properties:
+                        matchLabels:
+                          type: object
+                          properties:
+                            rg:
+                              type: string
+                    # Temporary Backend Settings
+                    backendAddressPool:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                    backendHttpSettings:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          port:
+                            type: number
+                    requestRoutingRule:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          backendAddressPoolName:
+                            type: string
+                          backendHttpSettingsName:
+                            type: string
+                          httpListenerName:
+                            type: string
+                          ruleType:
+                            type: string
+                          priority:
+                            type: number
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required:
+                    [
+                      "location",
+                      "frontendIpConfiguration",
+                      "gatewayIpConfiguration",
+                      "sku",
+                      "resourceGroupNameSelector",
+                    ]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object

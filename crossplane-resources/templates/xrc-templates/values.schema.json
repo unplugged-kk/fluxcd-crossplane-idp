@@ -1,0 +1,510 @@
+{
+    "": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "namespace": {
+            "type": "string"
+        },
+        "providerConfigRef": {
+            "type": "string"
+        },
+        "resourceGroup": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },     
+                "externalName": {
+                    "type": "string"
+                },          
+                "location": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "externalName",
+                "location"
+            ]
+        },
+        "virtualNetwork": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "externalName": {
+                    "type": "string"
+                },
+                "addressSpace": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "externalName",
+                "addressSpace",
+                "location"
+            ]
+        },
+        "subnets": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "externalName": {
+                        "type": "string"
+                    },
+                    "subnetRef": {
+                        "type": "string"
+                    },
+                    "addressPrefixes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "subnetName": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "externalName",
+                    "subnetRef",
+                    "addressPrefixes",
+                    "subnetName"
+                ]
+            }
+        },
+        "appGateway": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "externalName": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "sku": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "tier": {
+                            "type": "string"
+                        },
+                        "capacity": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "tier",
+                        "capacity"
+                    ]
+                },
+                "frontendIpConfiguration": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "publicIpAddressIdSelector": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "publicIpAddressIdSelector"
+                    ]
+                },
+                "gatewayIpConfiguration": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "subnetIdSelector": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "subnetIdSelector"
+                    ]
+                },
+                "frontendPort": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "port": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "port"
+                    ]
+                },
+                "httpListener": {
+                    "type": "object",
+                    "properties": {
+                        "frontendIpConfigurationName": {
+                            "type": "string"
+                        },
+                        "frontendPortName": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "protocol": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "frontendIpConfigurationName",
+                        "frontendPortName",
+                        "name",
+                        "protocol"
+                    ]
+                },
+                "resourceGroupNameSelector": {
+                    "type": "string"
+                },
+                "backendAddressPool": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ]
+                },
+                "backendHttpSettings": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "port": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "port"
+                    ]
+                },
+                "requestRoutingRule": {
+                    "type": "object",
+                    "properties": {
+                        "backendAddressPoolName": {
+                            "type": "string"
+                        },
+                        "backendHttpSettingsName": {
+                            "type": "string"
+                        },
+                        "httpListenerName": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "ruleType": {
+                            "type": "string"
+                        },
+                        "priority": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "backendAddressPoolName",
+                        "backendHttpSettingsName",
+                        "httpListenerName",
+                        "name",
+                        "ruleType",
+                        "priority"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "externalName",
+                "location",
+                "sku",
+                "frontendIpConfiguration",
+                "gatewayIpConfiguration",
+                "resourceGroupNameSelector"
+            ]
+        },
+        "firewall": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "skuName": {
+                    "type": "string"
+                },
+                "skuTier": {
+                    "type": "string"
+                },
+                "firewallPolicyId": {
+                    "type": "string"
+                },
+                "routeTableName": {
+                    "type": "string"
+                },
+                "addressPrefix": {
+                    "type": "string"
+                },
+                "nextHopType": {
+                    "type": "string"
+                },
+                "nextHopInIpAddress": {
+                    "type": "string"
+                },
+                "sku": {
+                    "type": "string"
+                },
+                "basePolicyId": {
+                    "type": "string"
+                },
+                "intrusionDetection": {
+                    "type": "object",
+                    "properties": {
+                        "mode": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "mode"
+                    ]
+                },
+                "threatIntelligenceMode": {
+                    "type": "string"
+                },
+                "autoLearnPrivateRangesEnabled": {
+                    "type": "boolean"
+                },
+                "firewallPolicyIdSelector": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "integer"
+                },
+                "applicationRuleCollection": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "action": {
+                            "type": "string"
+                        },
+                        "priority": {
+                            "type": "integer"
+                        },
+                        "rule": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "sourceAddresses": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "destinationFqdns": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "protocols": {
+                                    "type": "object",
+                                    "properties": {
+                                        "port": {
+                                            "type": "integer"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "port",
+                                        "type"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "sourceAddresses",
+                                "destinationFqdns",
+                                "protocols"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "action",
+                        "priority",
+                        "rule"
+                    ]
+                },
+                "networkRuleCollection": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "action": {
+                            "type": "string"
+                        },
+                        "priority": {
+                            "type": "integer"
+                        },
+                        "rule": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "sourceAddresses": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "destinationAddresses": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "destinationPorts": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "protocols": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "name",
+                                "sourceAddresses",
+                                "destinationAddresses",
+                                "destinationPorts",
+                                "protocols"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "action",
+                        "priority",
+                        "rule"
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "location",
+                "skuName",
+                "skuTier",
+                "routeTableName",
+                "addressPrefix",
+                "nextHopType",
+                "nextHopInIpAddress",
+                "sku",
+                "firewallPolicyIdSelector",
+                "priority",
+                "applicationRuleCollection",
+                "networkRuleCollection"
+            ]
+        },
+        "privateDNSZone": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "privateDnsZoneName": {
+                    "type": "string"
+                },
+                "virtualNetworkIdSelector": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "virtualNetworkIdSelector",
+                "privateDnsZoneName"
+            ]
+        },
+        "publicIPs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "externalName": {
+                        "type": "string"
+                    },
+                    "publicIPLabel": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "allocationMethod": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "externalName",
+                    "publicIPLabel",
+                    "location",
+                    "allocationMethod",
+                    "sku"
+                ]
+            }
+        }
+    },
+    "required": [
+        "namespace",
+        "resourceGroup"
+    ]
+}

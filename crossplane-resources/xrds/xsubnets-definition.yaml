@@ -1,0 +1,66 @@
+# This YAML configuration defines a CompositeResourceDefinition (XRD) in Crossplane for managing Azure subnets through Crossplane.
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xsubnets.azureinfra.kishorekumar.today
+spec:
+  # Specifies the API group where this CompositeResourceDefinition resides.
+  group: azureinfra.kishorekumar.today
+  names:
+    # Specifies the kind and plural form of the resource.
+    kind: xSubnet
+    plural: xsubnets
+  claimNames:
+    # Specifies the kind and plural form of the claim associated with this resource.
+    kind: SubnetClaim
+    plural: subnetclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          # Defines the schema for the resource.
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    # Specifies the address prefixes for the subnet.
+                    addressPrefixes: # Note the plural form to match Azure's expected format
+                      type: array
+                      items:
+                        type: string
+                    # Specifies the name of the virtual network associated with the subnet.
+                    virtualNetworkName:
+                      type: string
+                    # Specifies the name of the resource group associated with the subnet.
+                    resourceGroupName:
+                      type: string
+                    # Specifies the name of the subnet.
+                    subnetName:
+                      type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required:
+                    # Specifies the required parameters for creating the subnet.
+                    [
+                      "addressPrefixes",
+                      "virtualNetworkName",
+                      "resourceGroupName",
+                      "subnetName",
+                    ]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object

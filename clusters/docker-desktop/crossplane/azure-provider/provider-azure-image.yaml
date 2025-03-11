@@ -1,0 +1,6 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Image
+metadata:
+  name: provider-azure-image
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-compute:v1.2.0

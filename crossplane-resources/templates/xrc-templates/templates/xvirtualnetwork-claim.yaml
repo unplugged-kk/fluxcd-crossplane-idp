@@ -1,0 +1,19 @@
+{{- if .Values.virtualNetwork }}
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
+kind: VirtualNetworkClaim
+metadata:
+  name: {{ .Values.virtualNetwork.name }}-claim
+  namespace: {{ .Values.namespace }}
+  annotations:
+    crossplane.io/external-name: {{ .Values.virtualNetwork.externalName }}
+spec:
+  compositionRef:
+    name: xvirtualnetworks-azure
+  parameters:
+    addressSpace:
+      - {{ .Values.virtualNetwork.addressSpace }}
+    location: {{ .Values.virtualNetwork.location }}
+    resourceGroupName: {{ .Values.resourceGroup.externalName }}
+    providerConfigRef: 
+      name: {{ .Values.providerConfigRef }}
+{{- end }}    

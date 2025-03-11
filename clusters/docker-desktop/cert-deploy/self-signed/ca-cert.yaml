@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+  namespace: flux-system
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ca-cert
+  namespace: flux-system
+spec:
+  isCA: true
+  commonName: ca.local
+  secretName: ca-cert
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer

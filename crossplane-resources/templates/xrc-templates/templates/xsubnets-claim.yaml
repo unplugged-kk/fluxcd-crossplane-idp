@@ -1,0 +1,22 @@
+{{- range .Values.subnets }}
+---
+apiVersion: azureinfra.kishorekumar.today/v1alpha1
+kind: SubnetClaim
+metadata:
+  name: {{ .name }}-claim
+  namespace: {{ $.Values.namespace }}
+  labels:
+    subnet-ref: {{ .subnetRef }}
+  annotations:
+    crossplane.io/external-name: {{ .externalName }}  
+spec:
+  compositionRef:
+    name: xsubnets-azure
+  parameters:
+    addressPrefixes: {{ .addressPrefixes }}
+    virtualNetworkName: {{ $.Values.virtualNetwork.externalName }}
+    resourceGroupName: {{ $.Values.resourceGroup.externalName }}
+    subnetName: {{ .subnetName }} 
+    providerConfigRef: 
+      name: {{ $.Values.providerConfigRef }}
+{{- end }}

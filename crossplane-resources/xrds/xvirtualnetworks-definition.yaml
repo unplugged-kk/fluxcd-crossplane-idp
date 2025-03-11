@@ -1,0 +1,51 @@
+# The `xvirtualnetworks` CompositeResourceDefinition defines a custom resource in Crossplane for managing Azure virtual networks. It enables users to provision and manage virtual networks on Azure from Kubernetes clusters using Crossplane. This definition provides a structured way to specify parameters such as address space, location, and resource group name for the virtual network.
+
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xvirtualnetworks.azureinfra.kishorekumar.today
+spec:
+  group: azureinfra.kishorekumar.today
+  names:
+    kind: xVirtualNetwork
+    plural: xvirtualnetworks
+  claimNames:
+    kind: VirtualNetworkClaim
+    plural: virtualnetworkclaims
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                parameters:
+                  type: object
+                  properties:
+                    addressSpace:
+                      type: array
+                      items:
+                        type: string
+                    location:
+                      type: string
+                    # Specifies the name of the resource group associated with the virtual network
+                    resourceGroupName:
+                      type: string
+                    providerConfigRef:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                  required: ["addressSpace", "location", "resourceGroupName"]
+              required: ["parameters"]
+            status:
+              type: object
+              properties:
+                conditions:
+                  type: array
+                  items:
+                    type: object
